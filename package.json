@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:be": "nodemon backend/src/app.ts"
   },
   "keywords": [],
   "author": "Ichchhit Devkota & Shrijan Maharjan",
@@ -14,5 +15,8 @@
     "backend",
     "cms",
     "frontend"
-  ]
+  ],
+  "devDependencies": {
+    "tsx": "^4.19.1"
+  }
 }
