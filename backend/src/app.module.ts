@@ -8,6 +8,11 @@ import { OriginsModule } from './origins/origins.module';
 import { SizesModule } from './sizes/sizes.module';
 import { TagsModule } from './tags/tags.module';
 import { ProductsModule } from './products/products.module';
+import { BlogsModule } from './blogs/blogs.module';
+import { AuthorModule } from './authors/author.module';
+import { CategoriesService } from './categories/categories.service';
+import { CategoriesController } from './categories/categories.controller';
+import { CategoriesModule } from './categories/categories.module';
 
 @Module({
   imports: [
@@ -18,6 +23,9 @@ import { ProductsModule } from './products/products.module';
     SizesModule,
     TagsModule,
     ProductsModule,
+    BlogsModule,
+    AuthorModule,
+    CategoriesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
