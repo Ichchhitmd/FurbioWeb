@@ -1,9 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
+import { BackButton } from "../common/button";
+import ReactQuill from "react-quill";
 
-const ProductForm = () => {
+interface ProductFormProps {
+  handlePress: () => void;
+}
+const ProductForm: React.FC<ProductFormProps> = ({ handlePress }) => {
+  const [content, setContent] = useState("");
+
+  const handleChange = (value: string) => {
+    setContent(value);
+  };
+
   return (
-    <div className="w-full mx-28 my-28 flex flex-col gap-4">
-      <h1 className="text-2xl">Add a New Product</h1>
+    <div className="w-full flex flex-col gap-4 bg-white shadow-lg rounded-lg p-8">
+      <div className="">
+        <BackButton handlePress={handlePress} title="Back">
+          Back
+        </BackButton>
+      </div>
+      <h1 className="text-2xl text-center font-semibold">Add a New Product</h1>
+
       <form className="flex flex-col gap-4">
         <div className="grid grid-cols-3 gap-10 ">
           <input
@@ -79,11 +96,32 @@ const ProductForm = () => {
             <option value="">India</option>
           </select>
         </div>
-        <textarea
-          placeholder="Product Description"
-          className="p-2 border border-gray-300 rounded-lg h-40"
-        ></textarea>
-        <input type="file" className="p-2" />
+
+        <div className="grid grid-row-2 gap-16">
+          <ReactQuill
+            value={content}
+            className="h-40 rounded-lg focus:ring-2 focus:ring-blue-500"
+            onChange={handleChange}
+            placeholder="Write your blog content here..."
+            modules={{
+              toolbar: [
+                [{ header: [1, 2, false] }],
+                ["bold", "italic", "underline"],
+                ["blockquote", "code-block"],
+                [{ list: "ordered" }, { list: "bullet" }],
+                [{ indent: "-1" }, { indent: "+1" }],
+                [{ align: [] }],
+                ["link"],
+                ["clean"],
+              ],
+            }}
+          />
+
+          <input
+            type="file"
+            className="p-3 border border-gray-300 rounded-lg"
+          />
+        </div>
         <button type="submit" className="p-2 bg-blue-500 text-white rounded-lg">
           Submit
         </button>

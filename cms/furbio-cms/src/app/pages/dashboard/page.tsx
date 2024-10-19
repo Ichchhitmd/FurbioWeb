@@ -1,12 +1,12 @@
 "use client";
-import { AddButton } from "../../components/common/button";
-import { GlobalCard } from "@/app/components/common/card";
 import SideBar from "@/app/components/Dashboard/sidebar";
-import BlogForm from "@/app/components/rare/blogform";
-import CategoryForm from "@/app/components/rare/categoryForm";
-import { ProductPage } from "../product/productPage";
+import CategoryForm from "@/app/components/common/miniForm";
 import StatsBox from "@/app/components/rare/statsBox";
 import React, { useState } from "react";
+import { BlogPage } from "../blog/page";
+import { GlobalCard } from "@/app/components/common/card";
+import { AddButton } from "@/app/components/common/button";
+import { ProductPage } from "../product/productPage";
 
 const Dashboard: React.FC = () => {
   const [currentView, setCurrentView] = useState<string>("dashboard"); // State to track current view
@@ -29,7 +29,7 @@ const Dashboard: React.FC = () => {
           </div>
         );
       case "addBlogs":
-        return <BlogForm />;
+        return <BlogPage />;
       case "addCategory":
         return <CategoryForm />;
       case "addProducts":
