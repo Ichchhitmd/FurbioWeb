@@ -1,10 +1,10 @@
 'use client'
 import SideBar from '@/app/components/Dashboard/sidebar';
-import BlogForm from '@/app/components/rare/blogform';
 import CategoryForm from '@/app/components/rare/categoryForm';
 import ProductForm from '@/app/components/rare/productform';
 import StatsBox from '@/app/components/rare/statsBox';
 import React, { useState } from 'react';
+import { BlogPage } from '../blog/page';
 
 const Dashboard: React.FC = () => {
   const [currentView, setCurrentView] = useState<string>('dashboard'); // State to track current view
@@ -20,7 +20,7 @@ const Dashboard: React.FC = () => {
         );
       case 'addBlogs':
         return (
-         <BlogForm/>
+         <BlogPage/>
         );
     case 'addCategory':
         return(
