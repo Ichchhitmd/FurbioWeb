@@ -1,19 +1,31 @@
-import { AddIcon } from '@/app/assets/icons/svgIcon';
-import React, { useState } from 'react'
+import { AddIcon } from "@/app/assets/icons/svgIcon";
+import React, { useState } from "react";
 
 interface CustomButtonProps {
-    children: React.ReactNode,
-    title: string;
-    handlePress?: () => void;
-    containerClassnames?: string;
+  children: React.ReactNode;
+  title: string;
+  handlePress?: () => void;
+  containerClassnames?: string;
 }
-export const DashboardButton = ({title, handlePress, containerClassnames}: CustomButtonProps)  => {
+export const DashboardButton = ({
+  title,
+  handlePress,
+  containerClassnames,
+}: CustomButtonProps) => {
   return (
-    <button onClick={handlePress} className={`${containerClassnames} w-32 h-6 flex justify-center items-center bg-transparent hover:bg-indigo-800 hover:text-white`}>{title}</button>
-  )
-}
+    <button
+      onClick={handlePress}
+      className={`${containerClassnames} w-32 h-6 flex justify-center items-center bg-transparent hover:bg-indigo-800 hover:text-white`}
+    >
+      {title}
+    </button>
+  );
+};
 
-export const AddButton = ({ containerClassnames, children }: CustomButtonProps) => {
+export const AddButton = ({
+  containerClassnames,
+  children,
+}: CustomButtonProps) => {
   const [isHovered, setIsHovered] = useState(false);
   return (
     <div className="">

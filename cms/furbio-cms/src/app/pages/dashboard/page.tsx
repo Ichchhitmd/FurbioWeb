@@ -4,7 +4,7 @@ import { GlobalCard } from "@/app/components/common/card";
 import SideBar from "@/app/components/Dashboard/sidebar";
 import BlogForm from "@/app/components/rare/blogform";
 import CategoryForm from "@/app/components/rare/categoryForm";
-import { ProductPage } from "@/app/components/rare/productPage";
+import { ProductPage } from "../product/productPage";
 import StatsBox from "@/app/components/rare/statsBox";
 import React, { useState } from "react";
 
