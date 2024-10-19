@@ -6,6 +6,7 @@ interface CustomButtonProps {
     title: string;
     handlePress?: () => void;
     containerClassnames?: string;
+    disabled?: boolean;
 }
 export const DashboardButton = ({title, handlePress, containerClassnames}: CustomButtonProps)  => {
   return (
@@ -13,7 +14,7 @@ export const DashboardButton = ({title, handlePress, containerClassnames}: Custo
   )
 }
 
-export const AddButton = ({ containerClassnames, children }: CustomButtonProps) => {
+export const AddButton = ({ containerClassnames, children, disabled }: CustomButtonProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const toggleHover = () => {
     setIsHovered(!isHovered);
@@ -21,10 +22,12 @@ export const AddButton = ({ containerClassnames, children }: CustomButtonProps) 
   return (
     <div className="">
       <button
-        className={`${containerClassnames}bg-indigo-600 hover:bg-indigo-800 rounded-md w-10 h-10 px-2 group`}
+        className={`${containerClassnames}bg-red-600 hover:bg-red-500 rounded-full w-10 h-10 px-2 group`}
         onClick={toggleHover}
+        disabled={disabled}
+        
       >
-        <AddIcon className="w-5 h-5 group-hover:text-white" />
+        <AddIcon className="w-6 h-5 text-white" />
         {isHovered && (
           <div className="">
             {children}
