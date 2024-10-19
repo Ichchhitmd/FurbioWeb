@@ -12,7 +12,7 @@ export const ProductPage = () => {
   }
   const handleClick = () => {
     setCurrentView("addProducts");
-    setIsClicked(true); // Mark as clicked
+    setIsClicked(true);
   };
   return (
     <div className="p-20 relative w-full">
@@ -22,10 +22,10 @@ export const ProductPage = () => {
         description="A chair is a type of seat, typically designed for one person and consisting of one or more legs, a flat or slightly angled seat and a back-rest."
       ></GlobalCard>
       <div
-        className={`absolute bottom-10 right-10 ${isClicked ? "block" : ""}`}
+        className={`absolute bottom-10 right-12 ${isClicked ? "block" : ""}`}
       >
         <AddButton containerClassnames="relative">
-          <div className={`text-black absolute  `} onClick={handleClick}>
+          <div className="text-black absolute bottom-14 right-0 mt-2 bg-white p-2 border rounded shadow-md w-40" onClick={handleClick}>
             Add Product
           </div>
         </AddButton>
