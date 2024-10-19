@@ -10,7 +10,9 @@ const fetchWrapper = async <T, B = undefined>(
     const response = await fetch(url, {
       method,
       headers: {
-        ...((body && typeof body === "object") ? { "Content-Type": "application/json" } : {}),
+        ...(body && typeof body === "object"
+          ? { "Content-Type": "application/json" }
+          : {}),
         ...headers,
       },
       body: body ? JSON.stringify(body) : undefined,
@@ -21,7 +23,7 @@ const fetchWrapper = async <T, B = undefined>(
     }
 
     const contentType = response.headers.get("Content-Type");
-    
+
     if (contentType && contentType.includes("application/json")) {
       return response.json();
     } else {
@@ -34,5 +36,3 @@ const fetchWrapper = async <T, B = undefined>(
 };
 
 export default fetchWrapper;
-
-
