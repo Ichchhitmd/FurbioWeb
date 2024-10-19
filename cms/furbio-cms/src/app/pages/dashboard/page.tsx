@@ -1,5 +1,5 @@
 "use client";
-import { AddButton } from "@/app/components/common/addIcon";
+import { AddButton } from "../../components/common/button";
 import { GlobalCard } from "@/app/components/common/card";
 import SideBar from "@/app/components/Dashboard/sidebar";
 import BlogForm from "@/app/components/rare/blogform";

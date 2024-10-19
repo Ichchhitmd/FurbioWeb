@@ -20,7 +20,7 @@ export class ProductsController {
   constructor(private readonly productsService: ProductService) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor('image', multerOptions))
+  @UseInterceptors(FileInterceptor('image', multerOptions('products')))
   async createProduct(
     @Body() createProductDto: CreateProductDto,
     @UploadedFile() file: Express.Multer.File,

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { GlobalCard } from "../common/card";
-import { AddButton } from "../common/addIcon";
+import { AddButton } from "../common/button";
 import ProductForm from "./productform";
 
 export const ProductPage = () => {
@@ -12,7 +12,7 @@ export const ProductPage = () => {
   }
   const handleClick = () => {
     setCurrentView("addProducts");
-    setIsClicked(true); // Mark as clicked
+    setIsClicked(true);
   };
   return (
     <div className="p-20 relative w-full">
@@ -25,7 +25,7 @@ export const ProductPage = () => {
         className={`absolute bottom-10 right-10 ${isClicked ? "block" : ""}`}
       >
         <AddButton containerClassnames="relative">
-          <div className={`text-black absolute  `} onClick={handleClick}>
+          <div className={`text-black `} onClick={handleClick}>
             Add Product
           </div>
         </AddButton>
