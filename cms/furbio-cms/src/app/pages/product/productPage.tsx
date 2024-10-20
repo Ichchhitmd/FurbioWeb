@@ -5,6 +5,7 @@ import ProductForm from "../../components/rare/productform";
 import MiniForm from "@/app/components/common/miniForm";
 import { SizeData } from "@/app/types/products/sizeTypes";
 import apiService from "@/app/config/services/products/sizeServices";
+import productsServices from "@/app/config/services/products/productsServices";
 
 export const ProductPage = () => {
   const [currentView, setCurrentView] = useState<string>("ProductView");
@@ -12,10 +13,26 @@ export const ProductPage = () => {
   const [activeForm, setActiveForm] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     sizeName: "",
+    colorName: "",
   });
 
   const handleBack = () => {
     setCurrentView("ProductView");
+  };
+
+  const submitAddColor = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!formData.colorName) {
+      return;
+    }
+    try {
+      const addColor = await productsServices.postColor({
+        color_name: formData.colorName,
+      });
+      console.log(addColor);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleClick = () => {
@@ -120,6 +137,11 @@ export const ProductPage = () => {
             closeMiniAdder={closeMiniAdder}
             title="Add Color"
             placeholder="Color"
+            value={formData.colorName}
+            handleChangeText={(e) =>
+              setFormData({ ...formData, colorName: e.target.value })
+            }
+            onSubmit={submitAddColor}
           />
         )}
         {activeForm === "tagForm" && (

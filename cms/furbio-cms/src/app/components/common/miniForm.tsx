@@ -6,7 +6,7 @@ interface MiniFormProps {
   closeMiniAdder: () => void;
   showDescription?: boolean;
   placeholder?: string;
-  onSubmit?: (e: React.FormEvent) => void;
+  onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
   value: string;
   handleChangeText: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }

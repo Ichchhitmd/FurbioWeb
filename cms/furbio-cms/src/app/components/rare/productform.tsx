@@ -3,6 +3,8 @@ import { BackButton } from "../common/button";
 import dynamic from "next/dynamic";
 import apiService from "@/app/config/services/products/sizeServices";
 import { SizeResponse } from "@/app/types/products/sizeTypes";
+import productsServices from "@/app/config/services/products/productsServices";
+import { ColorAddResponse } from "@/app/types/products/productTypes";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 interface ProductFormProps {
@@ -11,6 +13,34 @@ interface ProductFormProps {
 const ProductForm: React.FC<ProductFormProps> = ({ handlePress }) => {
   const [content, setContent] = useState("");
   const [sizes, setSizes] = useState<SizeResponse[]>([]);
+  const [colors, setColors] = useState<ColorAddResponse[]>([]);
+  const [selectedSize, setSelectedSize] = useState<number | null>(null);
+  const [selectedColor, setSelectedColor] = useState<number | null>(null);
+
+  const fetchColors = async () => {
+    try {
+      const response = await productsServices.getAllColors();
+      if (response) {
+        setColors(response);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchColors();
+  }, []);
+
+  const handleSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedId = parseInt(e.target.value);
+    setSelectedSize(selectedId);
+  };
+  const handleColorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedId = parseInt(e.target.value);
+    setSelectedColor(selectedId);
+  };
+
   const handleChange = (value: string) => {
     setContent(value);
   };
@@ -92,12 +122,16 @@ const ProductForm: React.FC<ProductFormProps> = ({ handlePress }) => {
           />
         </div>
         <div className="grid grid-cols-4 gap-x-5">
-          <select className="p-2 border border-gray-300 rounded-lg">
+          <select
+            value={selectedSize || ""}
+            onChange={handleSizeChange}
+            className="p-2 border border-gray-300 rounded-lg"
+          >
             <option value="" disabled>
               Select Size
             </option>
             {sizes.map((size) => (
-              <option key={size.size_id} value={size.size_name}>
+              <option key={size.size_id} value={size.size_id}>
                 {size.size_name}
               </option>
             ))}
@@ -107,10 +141,20 @@ const ProductForm: React.FC<ProductFormProps> = ({ handlePress }) => {
             <option value="">Tag 1</option>
             <option value="">Tag 2</option>
           </select>
-          <select className="p-2 border border-gray-300 rounded-lg">
-            <option value="">Select Color</option>
-            <option value="">Red</option>
-            <option value="">Blue</option>
+          <select
+            id="color-select"
+            value={selectedColor || ""}
+            onChange={handleColorChange}
+            className="p-2 border border-gray-300 rounded-lg"
+          >
+            <option value="" disabled>
+              Select a Color
+            </option>
+            {colors.map((color) => (
+              <option key={color.color_id} value={color.color_id}>
+                {color.color_name}
+              </option>
+            ))}
           </select>
           <select className="p-2 border border-gray-300 rounded-lg">
             <option value="">Select Origin</option>
