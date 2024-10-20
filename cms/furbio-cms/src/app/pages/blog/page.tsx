@@ -37,7 +37,7 @@ export const BlogPage = () => {
       )}
       <div className="absolute bottom-10 right-12 ">
         <AddButton
-          containerClassnames={`relative ${miniAdder ? "bg-red-200 cursor-not-allowed pointer-events-none " : ""}`}
+          containerClassnames={`relative ${miniAdder ? "bg-red-200 cursor-not-allowed pointer-events-none opacity-50" : ""}`}
           title="Add Blog"
           disabled={miniAdder}
         >
