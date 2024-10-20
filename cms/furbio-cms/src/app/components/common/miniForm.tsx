@@ -1,11 +1,12 @@
 import { CloseIcon } from "@/app/assets/icons/svgIcon";
 import React from "react";
 
-interface CategoryFormProps {
+interface MiniFormProps {
+  title: string;
   closeMiniAdder: () => void;
 }
 
-const CategoryForm: React.FC<CategoryFormProps> = ({ closeMiniAdder }) => {
+const MiniForm: React.FC<MiniFormProps> = ({ closeMiniAdder, title }) => {
   return (
     <div className="w-full max-w-md mx-auto border-4 border-gray-300 bg-white rounded-lg shadow-lg relative p-6">
       <div className="absolute top-4 right-4">
@@ -18,9 +19,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ closeMiniAdder }) => {
       </div>
 
       <div className="px-8 py-6">
-        <h1 className="text-2xl font-semibold text-gray-800 mb-6">
-          Add a New Blog Category
-        </h1>
+        <h1 className="text-2xl font-semibold text-gray-800 mb-6">{title}</h1>
 
         <form className="space-y-4">
           <input
@@ -41,4 +40,4 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ closeMiniAdder }) => {
   );
 };
 
-export default CategoryForm;
+export default MiniForm;

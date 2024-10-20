@@ -1,11 +1,11 @@
 import { AddButton } from "@/app/components/common/button";
 import { GlobalCard } from "@/app/components/common/card";
 import BlogForm from "@/app/components/rare/blogform";
-import CategoryForm from "@/app/components/rare/categoryForm";
+import CategoryForm from "@/app/components/common/miniForm";
 import React, { useState } from "react";
 
 export const BlogPage = () => {
-  const [currentView, setCurrentView] = useState<string>("globalCard");
+  const [currentView, setCurrentView] = useState<string>("BlogView");
   const [miniAdder, setMiniAdder] = useState<boolean>(false);
 
   const handleClick = () => {
@@ -21,12 +21,12 @@ export const BlogPage = () => {
   };
 
   const handleBack = () => {
-    setCurrentView("globalCard");
+    setCurrentView("BlogView");
   };
 
   return (
     <div className="p-20 relative w-full">
-      {currentView === "globalCard" && (
+      {currentView === "BlogView" && (
         <>
           <GlobalCard
             containerClassnames=""
@@ -42,16 +42,30 @@ export const BlogPage = () => {
           disabled={miniAdder}
         >
           <div className="text-black absolute bottom-14 right-0 mt-2 bg-white p-2 border rounded shadow-md w-40 flex flex-col gap-5 items-center justify-center">
-            <div onClick={handleClickCategory}>Add Category</div>
-            <div onClick={handleClick}>Add Blog</div>
+            <div
+              className="text-black border solid border-shadow p-2 rounded-lg w-full hover:bg-indigo-800 hover:text-white"
+              onClick={handleClickCategory}
+            >
+              Add Category
+            </div>
+            <div
+              className="text-black border solid border-shadow p-2 rounded-lg w-full hover:bg-indigo-800 hover:text-white"
+              onClick={handleClick}
+            >
+              Add Blog
+            </div>
           </div>
-          <div></div>
         </AddButton>
       </div>
 
       {currentView === "addBlogs" && <BlogForm handlePress={handleBack} />}
       <div className="absolute bottom-28 right-10">
-        {miniAdder && <CategoryForm closeMiniAdder={closeMiniAdder} />}
+        {miniAdder && (
+          <CategoryForm
+            title="Add New Category Here"
+            closeMiniAdder={closeMiniAdder}
+          />
+        )}
       </div>
     </div>
   );

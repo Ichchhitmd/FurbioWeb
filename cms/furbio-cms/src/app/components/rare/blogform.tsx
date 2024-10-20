@@ -55,7 +55,7 @@ const BlogForm: React.FC<BlogFormProps> = ({ handlePress }) => {
           <div>
             <ReactQuill
               value={content}
-              className="h-40 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+              className="h-40 bg-white rounded-lg focus:ring-2 focus:ring-blue-500"
               onChange={handleChange}
               placeholder="Write your blog content here..."
               modules={{
