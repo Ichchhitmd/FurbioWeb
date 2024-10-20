@@ -7,6 +7,8 @@ const fetchWrapper = async <T, B = undefined>(
   const { method, headers, body } = options;
 
   try {
+    const isFormData = body instanceof FormData;
+
     const response = await fetch(url, {
       method,
       headers: {
@@ -15,7 +17,7 @@ const fetchWrapper = async <T, B = undefined>(
           : {}),
         ...headers,
       },
-      body: body ? JSON.stringify(body) : undefined,
+      body: isFormData ?  body : body ? JSON.stringify(body) : undefined,
     });
 
     if (!response.ok) {
