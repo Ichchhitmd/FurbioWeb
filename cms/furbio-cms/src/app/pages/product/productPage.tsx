@@ -85,7 +85,6 @@ export const ProductPage = () => {
             closeMiniAdder={closeMiniAdder}
             title="Add Size"
             placeholder="Size"
-            showDescription
           />
         )}
         {activeForm === "colorForm" && (
