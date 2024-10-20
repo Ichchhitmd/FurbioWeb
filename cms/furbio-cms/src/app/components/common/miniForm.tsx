@@ -4,9 +4,12 @@ import React from "react";
 interface MiniFormProps {
   title: string;
   closeMiniAdder: () => void;
+  showDescription?: boolean;
+  placeholder?: string;
+  onClick?: () => void;
 }
 
-const MiniForm: React.FC<MiniFormProps> = ({ closeMiniAdder, title }) => {
+const MiniForm: React.FC<MiniFormProps> = ({onClick, placeholder,closeMiniAdder, title, showDescription = false }) => {
   return (
     <div className="w-full max-w-md mx-auto border-4 border-gray-300 bg-white rounded-lg shadow-lg relative p-6">
       <div className="absolute top-4 right-4">
@@ -25,18 +28,21 @@ const MiniForm: React.FC<MiniFormProps> = ({ closeMiniAdder, title }) => {
           <input
             type="text"
             required
-            placeholder="Category"
+            placeholder={placeholder}
             className="p-3 border border-gray-300 bg-gray-50 rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none"
           />
-          <input
-            type="text"
-            required
-            placeholder="Description"
-            className="p-3 border border-gray-300 bg-gray-50 rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none"
-          />
+         {showDescription && (
+            <input
+              type="text"
+              required
+              placeholder="Description"
+              className="p-3 border border-gray-300 bg-gray-50 rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            />
+          )}
           <button
             type="submit"
             className="w-full p-3 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition duration-300"
+            onClick={onClick}
           >
             Submit
           </button>

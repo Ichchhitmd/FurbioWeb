@@ -89,6 +89,7 @@ export const ProductPage = () => {
                 key={index}
                 closeMiniAdder={() => closeMiniAdder(index)}
                 title={content}
+                placeholder={content}
               />
             );
           })}

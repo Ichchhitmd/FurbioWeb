@@ -1,8 +1,8 @@
 import { AddButton } from "@/app/components/common/button";
 import { GlobalCard } from "@/app/components/common/card";
 import BlogForm from "@/app/components/rare/blogform";
-import CategoryForm from "@/app/components/common/miniForm";
 import React, { useState } from "react";
+import MiniForm from "@/app/components/common/miniForm";
 
 export const BlogPage = () => {
   const [currentView, setCurrentView] = useState<string>("BlogView");
@@ -61,9 +61,11 @@ export const BlogPage = () => {
       {currentView === "addBlogs" && <BlogForm handlePress={handleBack} />}
       <div className="absolute bottom-28 right-10">
         {miniAdder && (
-          <CategoryForm
+          <MiniForm
             title="Add New Category Here"
+            showDescription={true}
             closeMiniAdder={closeMiniAdder}
+            placeholder="Category"
           />
         )}
       </div>
