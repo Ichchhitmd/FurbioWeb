@@ -1,13 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BackButton } from "../common/button";
 import dynamic from "next/dynamic";
+import productsServices from "@/app/config/services/products/productsServices";
+import { ColorAddResponse } from "@/app/types/products/productTypes";
 
-const ReactQuill = dynamic(() => import("react-quill"), {ssr: false})
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 interface ProductFormProps {
   handlePress: () => void;
 }
 const ProductForm: React.FC<ProductFormProps> = ({ handlePress }) => {
   const [content, setContent] = useState("");
+  const [colors, setColors] = useState<ColorAddResponse[]>([]);
+  const [selectedColor, setSelectedColor] = useState<number | null>(null);
+
+  const fetchColors = async () => {
+    try {
+      const response = await productsServices.getAllColors();
+      if (response) {
+        setColors(response);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchColors();
+  }, []);
+
+  const handleColorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedId = parseInt(e.target.value);
+    setSelectedColor(selectedId);
+  };
 
   const handleChange = (value: string) => {
     setContent(value);
@@ -86,10 +110,20 @@ const ProductForm: React.FC<ProductFormProps> = ({ handlePress }) => {
             <option value="">Tag 1</option>
             <option value="">Tag 2</option>
           </select>
-          <select className="p-2 border border-gray-300 rounded-lg">
-            <option value="">Select Color</option>
-            <option value="">Red</option>
-            <option value="">Blue</option>
+          <select
+            id="color-select"
+            value={selectedColor || ""}
+            onChange={handleColorChange}
+            className="p-2 border border-gray-300 rounded-lg"
+          >
+            <option value="" disabled>
+              Select a Color
+            </option>
+            {colors.map((color) => (
+              <option key={color.color_id} value={color.color_id}>
+                {color.color_name}
+              </option>
+            ))}
           </select>
           <select className="p-2 border border-gray-300 rounded-lg">
             <option value="">Select Origin</option>
