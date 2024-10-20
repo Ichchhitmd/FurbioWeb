@@ -39,6 +39,8 @@ const MiniForm: React.FC<MiniFormProps> = ({onClick,value,handleChangeText, plac
             <input
               type="text"
               required
+              value={value}
+              onChange={handleChangeText}
               placeholder="Description"
               className="p-3 border border-gray-300 bg-gray-50 rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
