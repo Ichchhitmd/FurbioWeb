@@ -7,7 +7,7 @@ import MiniForm from "@/app/components/common/miniForm";
 export const ProductPage = () => {
   const [currentView, setCurrentView] = useState<string>("ProductView");
   const [miniAdder, setMiniAdder] = useState<boolean>(false);
-  const [smallForm, setSmallForm] = useState<string[]>([]);
+  const [activeForm, setActiveForm] = useState<string | null>(null);
 
   const handleBack = () => {
     setCurrentView("ProductView");
@@ -17,16 +17,14 @@ export const ProductPage = () => {
     setCurrentView("addProducts");
   };
 
-  const handleClickOptions = (option: string) => {
+  const handleFormOpen = (formType: string) => {
+    setActiveForm(formType);
     setMiniAdder(true);
-    setSmallForm((previous) => [...previous, option]);
   };
 
-  const closeMiniAdder = (index: number) => {
-    setSmallForm((prevForms) => prevForms.filter((_, i) => i !== index));
-    if (smallForm.length === 1) {
-      setMiniAdder(false);
-    }
+  const closeMiniAdder = () => {
+    setMiniAdder(false);
+    setActiveForm(null);
   };
 
   return (
@@ -41,7 +39,7 @@ export const ProductPage = () => {
       <div className="absolute bottom-10 right-12">
         <AddButton
           title="Add Product"
-          containerClassnames={`relative ${miniAdder ? "bg-red-200 pointer-events-none " : ""}`}
+          containerClassnames={`relative ${miniAdder ? "bg-red-200 pointer-events-none opacity-50 " : ""}`}
           disabled={miniAdder}
         >
           <div className="text-black bottom-14 right-0 mt-2 bg-white p-2 border rounded shadow-md w-40 flex flex-col gap-5 absolute items-center justify-center">
@@ -53,25 +51,25 @@ export const ProductPage = () => {
             </div>
             <div
               className="text-black border solid border-shadow p-2 rounded-lg w-full hover:bg-indigo-800 hover:text-white"
-              onClick={() => handleClickOptions("Size")}
+              onClick={() => handleFormOpen("sizeForm")}
             >
               Add Size
             </div>
             <div
               className="text-black border solid border-shadow p-2 rounded-lg w-full hover:bg-indigo-800 hover:text-white"
-              onClick={() => handleClickOptions("Tag")}
+              onClick={() => handleFormOpen("tagForm")}
             >
               Add Tag
             </div>
             <div
               className="text-black border solid border-shadow p-2 rounded-lg w-full hover:bg-indigo-800 hover:text-white"
-              onClick={() => handleClickOptions("Origin")}
+              onClick={() => handleFormOpen("originForm")}
             >
               Add Origin
             </div>
             <div
               className="text-black border solid border-shadow p-2 rounded-lg w-full hover:bg-indigo-800 hover:text-white"
-              onClick={() => handleClickOptions("Color")}
+              onClick={() => handleFormOpen("colorForm")}
             >
               Add Color
             </div>
@@ -82,17 +80,34 @@ export const ProductPage = () => {
         <ProductForm handlePress={handleBack} />
       )}
       <div className="absolute bottom-28 right-10">
-        {miniAdder &&
-          smallForm.map((content, index) => {
-            return (
-              <MiniForm
-                key={index}
-                closeMiniAdder={() => closeMiniAdder(index)}
-                title={content}
-                placeholder={content}
-              />
-            );
-          })}
+        {activeForm === "sizeForm" && (
+          <MiniForm
+            closeMiniAdder={closeMiniAdder}
+            title="Add Size"
+            placeholder="Size"
+          />
+        )}
+        {activeForm === "colorForm" && (
+          <MiniForm
+            closeMiniAdder={closeMiniAdder}
+            title="Add Color"
+            placeholder="Color"
+          />
+        )}
+        {activeForm === "tagForm" && (
+          <MiniForm
+            closeMiniAdder={closeMiniAdder}
+            title="Add Tag"
+            placeholder="Tag"
+          />
+        )}
+        {activeForm === "originForm" && (
+          <MiniForm
+            closeMiniAdder={closeMiniAdder}
+            title="Add Origin"
+            placeholder="Origin"
+          />
+        )}
       </div>
     </div>
   );
