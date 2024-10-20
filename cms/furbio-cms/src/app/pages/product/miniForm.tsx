@@ -1,6 +1,6 @@
 import React from "react";
 
-export const SizePage = () => {
+export const SizeForm = () => {
   return (
     <div className="w-full mx-28 my-28 flex flex-col gap-4">
       Add Size
@@ -23,7 +23,7 @@ export const SizePage = () => {
   );
 };
 
-export const OriginPage = () => {
+export const OriginForm = () => {
   return (
     <div className="w-full mx-28 my-28 flex flex-col gap-4">
       Add Origin
@@ -46,7 +46,7 @@ export const OriginPage = () => {
   );
 };
 
-export const TagPage = () => {
+export const TagForm = () => {
   return (
     <div className="w-full mx-28 my-28 flex flex-col gap-4">
       Add Tag
@@ -69,7 +69,7 @@ export const TagPage = () => {
   );
 };
 
-export const ColorPage = () => {
+export const ColorForm = () => {
   return (
     <div className="w-full mx-28 my-28 flex flex-col gap-4">
       Add Color
