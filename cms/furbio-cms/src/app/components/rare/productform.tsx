@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { BackButton } from "../common/button";
-import ReactQuill from "react-quill";
+import dynamic from "next/dynamic";
 
+const ReactQuill = dynamic(() => import("react-quill"), {ssr: false})
 interface ProductFormProps {
   handlePress: () => void;
 }
