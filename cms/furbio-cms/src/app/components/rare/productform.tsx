@@ -1,17 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BackButton } from "../common/button";
 import dynamic from "next/dynamic";
+import apiService from "@/app/config/services/products/sizeServices";
+import { SizeResponse } from "@/app/types/products/sizeTypes";
 
-const ReactQuill = dynamic(() => import("react-quill"), {ssr: false})
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 interface ProductFormProps {
   handlePress: () => void;
 }
 const ProductForm: React.FC<ProductFormProps> = ({ handlePress }) => {
   const [content, setContent] = useState("");
-
+  const [sizes, setSizes] = useState<SizeResponse[]>([]);
   const handleChange = (value: string) => {
     setContent(value);
   };
+
+  const fetchSize = async () => {
+    try {
+      const response = await apiService.getSizes();
+      setSizes(response);
+      console.log(response);
+    } catch (error) {
+      console.log("Error fetching sizes", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchSize();
+  }, []);
 
   return (
     <div className="w-full flex flex-col gap-4 bg-white shadow-lg rounded-lg p-8">
@@ -77,9 +93,14 @@ const ProductForm: React.FC<ProductFormProps> = ({ handlePress }) => {
         </div>
         <div className="grid grid-cols-4 gap-x-5">
           <select className="p-2 border border-gray-300 rounded-lg">
-            <option value="">Select Size</option>
-            <option value="">Medium</option>
-            <option value="">Large</option>
+            <option value="" disabled>
+              Select Size
+            </option>
+            {sizes.map((size) => (
+              <option key={size.size_id} value={size.size_name}>
+                {size.size_name}
+              </option>
+            ))}
           </select>
           <select className="p-2 border border-gray-300 rounded-lg">
             <option value="">Select Tags</option>

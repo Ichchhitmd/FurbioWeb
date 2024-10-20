@@ -3,11 +3,16 @@ import { GlobalCard } from "../../components/common/card";
 import { AddButton } from "../../components/common/button";
 import ProductForm from "../../components/rare/productform";
 import MiniForm from "@/app/components/common/miniForm";
+import { SizeData } from "@/app/types/products/sizeTypes";
+import apiService from "@/app/config/services/products/sizeServices";
 
 export const ProductPage = () => {
   const [currentView, setCurrentView] = useState<string>("ProductView");
   const [miniAdder, setMiniAdder] = useState<boolean>(false);
   const [activeForm, setActiveForm] = useState<string | null>(null);
+  const [formData, setFormData] = useState({
+    sizeName: "",
+  });
 
   const handleBack = () => {
     setCurrentView("ProductView");
@@ -17,6 +22,26 @@ export const ProductPage = () => {
     setCurrentView("addProducts");
   };
 
+  const handleSizeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      sizeName: e.target.value,
+    });
+  };
+
+  const handleSize = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const data: SizeData = {
+      size_name: formData.sizeName,
+    };
+
+    try {
+      const response = await apiService.createSizes(data);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const handleFormOpen = (formType: string) => {
     setActiveForm(formType);
     setMiniAdder(true);
@@ -82,8 +107,11 @@ export const ProductPage = () => {
       <div className="absolute bottom-28 right-10">
         {activeForm === "sizeForm" && (
           <MiniForm
+            onSubmit={handleSize}
             closeMiniAdder={closeMiniAdder}
             title="Add Size"
+            handleChangeText={handleSizeChange}
+            value={formData.sizeName}
             placeholder="Size"
           />
         )}
