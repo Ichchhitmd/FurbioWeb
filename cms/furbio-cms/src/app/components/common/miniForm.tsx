@@ -24,10 +24,16 @@ const MiniForm: React.FC<MiniFormProps> = ({ closeMiniAdder, title }) => {
         <form className="space-y-4">
           <input
             type="text"
+            required
             placeholder="Category"
             className="p-3 border border-gray-300 bg-gray-50 rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none"
           />
-
+          <input
+            type="text"
+            required
+            placeholder="Description"
+            className="p-3 border border-gray-300 bg-gray-50 rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          />
           <button
             type="submit"
             className="w-full p-3 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition duration-300"

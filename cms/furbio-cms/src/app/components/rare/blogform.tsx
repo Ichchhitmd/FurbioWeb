@@ -51,6 +51,13 @@ const BlogForm: React.FC<BlogFormProps> = ({ handlePress }) => {
               <option value="Business">Business</option>
             </select>
           </div>
+                  <select
+                    required
+                    className="p-3 border border-gray-300 bg-gray-50 rounded-lg w-1/3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  >
+                    <option value="">Select Author</option>
+                    <option value="Rabbit">Rabbit</option>
+                  </select>
 
           <div>
             <ReactQuill
@@ -72,6 +79,7 @@ const BlogForm: React.FC<BlogFormProps> = ({ handlePress }) => {
               }}
             />
           </div>
+
 
           <div className="">
             <input
