@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BackButton } from "../common/button";
 import "react-quill/dist/quill.snow.css";
 import dynamic from "next/dynamic";
-import { AuthorTypesResponse } from "@/app/types/blogs/blogsTypes";
+import { AuthorTypesResponse, CategoryTypesResponse } from "@/app/types/blogs/blogsTypes";
 import blogsServices from "@/app/config/services/blogs/blogsServices";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
@@ -14,6 +14,8 @@ const BlogForm: React.FC<BlogFormProps> = ({ handlePress }) => {
   const [content, setContent] = useState("");
   const [authors, setAuthor] = useState<AuthorTypesResponse[]>([]);
   const [selectedAuthor, setSelectedAuthor] = useState<number | null>(null);
+  const [categories, setCategories] = useState<CategoryTypesResponse[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<number | null>(null);
 
   const fetchAuthors = async () => {
     try {
@@ -26,9 +28,25 @@ const BlogForm: React.FC<BlogFormProps> = ({ handlePress }) => {
     }
   };
 
+  const fetchCategories = async () => {
+    try{
+      const response = await blogsServices.getAllCategories();
+      if(response) {
+        setCategories(response);
+      }
+    }catch(error) {
+      console.log(error)
+    }
+  }
   useEffect(()=> {
     fetchAuthors()
+    fetchCategories()
   },[])
+
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedId = parseInt(e.target.value);
+    setSelectedCategories(selectedId);
+  };
 
   const handleAuthorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedId = parseInt(e.target.value);
@@ -66,13 +84,20 @@ const BlogForm: React.FC<BlogFormProps> = ({ handlePress }) => {
               className="p-3 border border-gray-300 bg-gray-50 rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
             <select
+            id="category-select"
+            value={selectedCategories || ""}
+            onChange={handleCategoryChange}
               required
               className="p-3 border border-gray-300 bg-gray-50 rounded-lg w-1/3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
             >
-              <option value="">Select Category</option>
-              <option value="Tech">Tech</option>
-              <option value="Lifestyle">Lifestyle</option>
-              <option value="Business">Business</option>
+              <option value="" disabled>
+                Select Category
+              </option>
+              {categories.map((category) => (
+                <option key={category.category_id} value={category.category_id}>
+                  {category.name}
+                </option>
+              ))}
             </select>
           </div>
                   <select
