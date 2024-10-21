@@ -8,9 +8,9 @@ interface MiniFormProps {
   placeholder?: string;
   placeholderDescription?: string;
   value: string; 
-  valueDescription: string;
+  valueDescription?: string;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleChangeDescription: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChangeDescription?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void; 
   resetFields: () => void; 
 }
