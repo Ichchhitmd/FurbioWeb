@@ -68,6 +68,14 @@ export const ProductPage = () => {
     }
   };
 
+  const resetField = () => {
+    setFormData({
+      tagName: "",
+      sizeName: "",
+      colorName: "",
+      originName: "",
+    });
+  };
   const handleTagChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
@@ -177,6 +185,7 @@ export const ProductPage = () => {
             handleChange={handleSizeChange}
             value={formData.sizeName}
             placeholder="Size"
+            resetFields={resetField}
           />
         )}
         {activeForm === "colorForm" && (
@@ -189,6 +198,7 @@ export const ProductPage = () => {
               setFormData({ ...formData, colorName: e.target.value })
             }
             onSubmit={submitAddColor}
+            resetFields={resetField}
           />
         )}
         {activeForm === "tagForm" && (
@@ -199,6 +209,7 @@ export const ProductPage = () => {
             value={formData.tagName}
             title="Add Tag"
             placeholder="Tag"
+            resetFields={resetField}
           />
         )}
         {activeForm === "originForm" && (
@@ -209,6 +220,7 @@ export const ProductPage = () => {
             closeMiniAdder={closeMiniAdder}
             title="Add Origin"
             placeholder="Origin"
+            resetFields={resetField}
           />
         )}
       </div>
