@@ -10,9 +10,13 @@ export const BlogPage = () => {
   const [miniAdder, setMiniAdder] = useState<boolean>(false);
   const [miniAuthorAdder, setMiniAuthorAdder] = useState<boolean>(false);
   const [authorFormData, setAuthorFormData] = useState({
-    name: '',
-    bio: ''
-  })
+    name: "",
+    bio: "",
+  });
+  const [categoryFormData, setCategoryFormData] = useState({
+    name: "",
+    description: "",
+  });
 
   const submitAddAuthor = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -22,20 +26,41 @@ export const BlogPage = () => {
     try {
       const addAuthor = await blogsServices.postAuthor({
         name: authorFormData.name,
-        bio: authorFormData.bio
+        bio: authorFormData.bio,
       });
       console.log(addAuthor);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
+  const submitAddCategory = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    console.log("katyio");
+    try {
+      const addCategory = await blogsServices.createCategory({
+        name: categoryFormData.name,
+        description: categoryFormData.description,
+      });
+      console.log(addCategory);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const resetCategoryFields = () => {
+    setCategoryFormData({
+      name: "",
+      description: "",
+    });
+  };
   const resetAuthorFields = () => {
     setAuthorFormData({
-      name: '',
-      bio: ''
-    })
-  }
+      name: "",
+      bio: "",
+    });
+  };
 
   const handleClick = () => {
     setCurrentView("addBlogs");
@@ -45,7 +70,7 @@ export const BlogPage = () => {
     setMiniAdder(true);
   };
 
-  const closeMiniAdder = () => {
+  const closeCategoryMiniAdder = () => {
     setMiniAdder(false);
   };
 
@@ -75,7 +100,9 @@ export const BlogPage = () => {
       <div className="absolute bottom-10 right-12 ">
         <AddButton
           containerClassnames={`relative ${
-            miniAdder || miniAuthorAdder ? "bg-red-200 cursor-not-allowed pointer-events-none opacity-50" : ""
+            miniAdder || miniAuthorAdder
+              ? "bg-red-200 cursor-not-allowed pointer-events-none opacity-50"
+              : ""
           }`}
           title="Add Blog"
           disabled={miniAdder || miniAuthorAdder}
@@ -109,9 +136,22 @@ export const BlogPage = () => {
           <MiniForm
             title="Add New Category Here"
             showDescription={true}
-            closeMiniAdder={closeMiniAdder}
+            closeMiniAdder={closeCategoryMiniAdder}
             placeholder="Category"
             placeholderDescription="Description"
+            value={categoryFormData.name}
+            valueDescription={categoryFormData.description}
+            handleChange={(e) =>
+              setCategoryFormData({ ...categoryFormData, name: e.target.value })
+            }
+            handleChangeDescription={(e) =>
+              setCategoryFormData({
+                ...categoryFormData,
+                description: e.target.value,
+              })
+            }
+            onSubmit={submitAddCategory}
+            resetFields={resetCategoryFields}
           />
         )}
         {miniAuthorAdder && (
@@ -122,8 +162,12 @@ export const BlogPage = () => {
             placeholder="Author Name"
             value={authorFormData.name}
             valueDescription={authorFormData.bio}
-            handleChange={(e) => setAuthorFormData({ ...authorFormData, name: e.target.value })}
-            handleChangeDescription={(e) => setAuthorFormData({ ...authorFormData, bio: e.target.value })}
+            handleChange={(e) =>
+              setAuthorFormData({ ...authorFormData, name: e.target.value })
+            }
+            handleChangeDescription={(e) =>
+              setAuthorFormData({ ...authorFormData, bio: e.target.value })
+            }
             onSubmit={submitAddAuthor}
             placeholderDescription="Bio"
             resetFields={resetAuthorFields}

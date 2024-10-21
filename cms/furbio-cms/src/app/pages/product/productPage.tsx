@@ -174,7 +174,7 @@ export const ProductPage = () => {
             onSubmit={handleSize}
             closeMiniAdder={closeMiniAdder}
             title="Add Size"
-            handleChangeText={handleSizeChange}
+            handleChange={handleSizeChange}
             value={formData.sizeName}
             placeholder="Size"
           />
@@ -185,7 +185,7 @@ export const ProductPage = () => {
             title="Add Color"
             placeholder="Color"
             value={formData.colorName}
-            handleChangeText={(e) =>
+            handleChange={(e) =>
               setFormData({ ...formData, colorName: e.target.value })
             }
             onSubmit={submitAddColor}
@@ -195,7 +195,7 @@ export const ProductPage = () => {
           <MiniForm
             onSubmit={handleTag}
             closeMiniAdder={closeMiniAdder}
-            handleChangeText={handleTagChange}
+            handleChange={handleTagChange}
             value={formData.tagName}
             title="Add Tag"
             placeholder="Tag"
@@ -205,7 +205,7 @@ export const ProductPage = () => {
           <MiniForm
             value={formData.originName}
             onSubmit={handleOrigin}
-            handleChangeText={handleOriginChange}
+            handleChange={handleOriginChange}
             closeMiniAdder={closeMiniAdder}
             title="Add Origin"
             placeholder="Origin"
