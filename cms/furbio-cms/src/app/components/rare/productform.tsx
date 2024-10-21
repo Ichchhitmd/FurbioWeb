@@ -4,7 +4,13 @@ import dynamic from "next/dynamic";
 import apiService from "@/app/config/services/products/sizeServices";
 import { SizeResponse } from "@/app/types/products/sizeTypes";
 import productsServices from "@/app/config/services/products/productsServices";
-import { ColorAddResponse } from "@/app/types/products/productTypes";
+import {
+  ColorAddResponse,
+  OriginAddResponse,
+  TagAddResponse,
+} from "@/app/types/products/productTypes";
+import originServices from "@/app/config/services/products/originServices";
+import tagServices from "@/app/config/services/products/tagServices";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 interface ProductFormProps {
@@ -14,8 +20,12 @@ const ProductForm: React.FC<ProductFormProps> = ({ handlePress }) => {
   const [content, setContent] = useState("");
   const [sizes, setSizes] = useState<SizeResponse[]>([]);
   const [colors, setColors] = useState<ColorAddResponse[]>([]);
+  const [origins, setOrigins] = useState<OriginAddResponse[]>([]);
+  const [tags, setTags] = useState<TagAddResponse[]>([]);
+  const [selectedTag, setSelectedTag] = useState<number | null>(null);
   const [selectedSize, setSelectedSize] = useState<number | null>(null);
   const [selectedColor, setSelectedColor] = useState<number | null>(null);
+  const [selectedOrigin, setSelectedOrigin] = useState<number | null>(null);
 
   const fetchColors = async () => {
     try {
@@ -32,10 +42,6 @@ const ProductForm: React.FC<ProductFormProps> = ({ handlePress }) => {
     fetchColors();
   }, []);
 
-  const handleSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedId = parseInt(e.target.value);
-    setSelectedSize(selectedId);
-  };
   const handleColorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedId = parseInt(e.target.value);
     setSelectedColor(selectedId);
@@ -45,7 +51,11 @@ const ProductForm: React.FC<ProductFormProps> = ({ handlePress }) => {
     setContent(value);
   };
 
-  const fetchSize = async () => {
+  const handleSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedId = parseInt(e.target.value);
+    setSelectedSize(selectedId);
+  };
+  const fetchSizes = async () => {
     try {
       const response = await apiService.getSizes();
       setSizes(response);
@@ -56,7 +66,44 @@ const ProductForm: React.FC<ProductFormProps> = ({ handlePress }) => {
   };
 
   useEffect(() => {
-    fetchSize();
+    fetchSizes();
+  }, []);
+
+  const handleOriginChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedId = parseInt(e.target.value);
+    setSelectedOrigin(selectedId);
+  };
+
+  const fetchOrigins = async () => {
+    try {
+      const response = await originServices.getOrigins();
+      setOrigins(response);
+      console.log(response);
+    } catch (error) {
+      console.log("Error fetching origins", error);
+    }
+  };
+  useEffect(() => {
+    fetchOrigins();
+  }, []);
+
+  const handleTagChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedId = parseInt(e.target.value);
+    setSelectedTag(selectedId);
+  };
+
+  const fetchTags = async () => {
+    try {
+      const response = await tagServices.getTags();
+      setTags(response);
+      console.log(response);
+    } catch (error) {
+      console.log("Error fetching tags", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTags();
   }, []);
 
   return (
@@ -136,10 +183,19 @@ const ProductForm: React.FC<ProductFormProps> = ({ handlePress }) => {
               </option>
             ))}
           </select>
-          <select className="p-2 border border-gray-300 rounded-lg">
-            <option value="">Select Tags</option>
-            <option value="">Tag 1</option>
-            <option value="">Tag 2</option>
+          <select
+            value={selectedTag || ""}
+            onChange={handleTagChange}
+            className="p-2 border border-gray-300 rounded-lg"
+          >
+            <option value="" disabled>
+              Select Tags
+            </option>
+            {tags.map((tag) => (
+              <option key={tag.tag_id} value={tag.tag_id}>
+                {tag.tag_name}
+              </option>
+            ))}
           </select>
           <select
             id="color-select"
@@ -156,10 +212,19 @@ const ProductForm: React.FC<ProductFormProps> = ({ handlePress }) => {
               </option>
             ))}
           </select>
-          <select className="p-2 border border-gray-300 rounded-lg">
-            <option value="">Select Origin</option>
-            <option value="">Nepal</option>
-            <option value="">India</option>
+          <select
+            value={selectedOrigin || ""}
+            onChange={handleOriginChange}
+            className="p-2 border border-gray-300 rounded-lg"
+          >
+            <option value="" disabled>
+              Select Origin
+            </option>
+            {origins.map((origin) => (
+              <option key={origin.origin_id} value={origin.origin_id}>
+                {origin.origin_name}
+              </option>
+            ))}
           </select>
         </div>
 

@@ -3,7 +3,7 @@ import fetchWrapper from "../../api/fetchWrapper";
 import API_ENDPOINTS from "../../api/apiEndpoints";
 
 const apiService = {
-  createSizes: async (requestBody: SizeData): Promise<SizeResponse> => {
+  createSize: async (requestBody: SizeData): Promise<SizeResponse> => {
     const data = fetchWrapper<SizeResponse, SizeData>(
       API_ENDPOINTS.PRODUCT_SIZE,
       {

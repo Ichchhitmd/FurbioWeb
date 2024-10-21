@@ -6,6 +6,12 @@ import MiniForm from "@/app/components/common/miniForm";
 import { SizeData } from "@/app/types/products/sizeTypes";
 import apiService from "@/app/config/services/products/sizeServices";
 import productsServices from "@/app/config/services/products/productsServices";
+import tagServices from "@/app/config/services/products/tagServices";
+import {
+  OriginAddRequest,
+  TagAddRequest,
+} from "@/app/types/products/productTypes";
+import originServices from "@/app/config/services/products/originServices";
 
 export const ProductPage = () => {
   const [currentView, setCurrentView] = useState<string>("ProductView");
@@ -14,6 +20,8 @@ export const ProductPage = () => {
   const [formData, setFormData] = useState({
     sizeName: "",
     colorName: "",
+    tagName: "",
+    originName: "",
   });
 
   const handleBack = () => {
@@ -53,12 +61,51 @@ export const ProductPage = () => {
     };
 
     try {
-      const response = await apiService.createSizes(data);
+      const response = await apiService.createSize(data);
       console.log(response);
     } catch (error) {
       console.log(error);
     }
   };
+
+  const handleTagChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      tagName: e.target.value,
+    });
+  };
+  const handleTag = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const data: TagAddRequest = {
+      tag_name: formData.tagName,
+    };
+    try {
+      const response = await tagServices.createTag(data);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleOriginChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      originName: e.target.value,
+    });
+  };
+  const handleOrigin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const data: OriginAddRequest = {
+      origin_name: formData.originName,
+    };
+    try {
+      const response = await originServices.createOrigin(data);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleFormOpen = (formType: string) => {
     setActiveForm(formType);
     setMiniAdder(true);
@@ -146,13 +193,19 @@ export const ProductPage = () => {
         )}
         {activeForm === "tagForm" && (
           <MiniForm
+            onSubmit={handleTag}
             closeMiniAdder={closeMiniAdder}
+            handleChangeText={handleTagChange}
+            value={formData.tagName}
             title="Add Tag"
             placeholder="Tag"
           />
         )}
         {activeForm === "originForm" && (
           <MiniForm
+            value={formData.originName}
+            onSubmit={handleOrigin}
+            handleChangeText={handleOriginChange}
             closeMiniAdder={closeMiniAdder}
             title="Add Origin"
             placeholder="Origin"
