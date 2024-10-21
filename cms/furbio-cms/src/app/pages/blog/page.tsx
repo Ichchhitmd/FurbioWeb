@@ -36,8 +36,9 @@ export const BlogPage = () => {
 
   const submitAddCategory = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    console.log("katyio");
+    if (!categoryFormData.name || !categoryFormData.description) {
+      return;
+    }
     try {
       const addCategory = await blogsServices.createCategory({
         name: categoryFormData.name,

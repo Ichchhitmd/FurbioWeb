@@ -29,18 +29,17 @@ const blogsServices = {
   },
 
   createCategory: async (requestBody: CategoryTypesRequest) => {
-    const data = fetchWrapper<CategoryTypesResponse, CategoryTypesRequest>(
+    return fetchWrapper<CategoryTypesResponse, CategoryTypesRequest>(
       API_ENDPOINTS.BLOGS_CATEGORY,
       {
         method: "POST",
         body: requestBody,
       }
     );
-    return data;
   },
 
-  getCategories: async (): Promise<CategoryTypesRequest[]> => {
-    const data = fetchWrapper<CategoryTypesRequest[]>(
+  getAllCategories: async (): Promise<CategoryTypesResponse[]> => {
+    const data = fetchWrapper<CategoryTypesResponse[]>(
       API_ENDPOINTS.BLOGS_CATEGORY,
       {
         method: "GET",
