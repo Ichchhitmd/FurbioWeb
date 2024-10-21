@@ -6,12 +6,20 @@ interface MiniFormProps {
   closeMiniAdder: () => void;
   showDescription?: boolean;
   placeholder?: string;
-  onClick?: () => void;
+  onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
   value: string;
   handleChangeText: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const MiniForm: React.FC<MiniFormProps> = ({onClick,value,handleChangeText, placeholder,closeMiniAdder, title, showDescription = false }) => {
+const MiniForm: React.FC<MiniFormProps> = ({
+  onSubmit,
+  value,
+  handleChangeText,
+  placeholder,
+  closeMiniAdder,
+  title,
+  showDescription = false,
+}) => {
   return (
     <div className="w-full max-w-md mx-auto border-4 border-gray-300 bg-white rounded-lg shadow-lg relative p-6">
       <div className="absolute top-4 right-4">
@@ -32,10 +40,10 @@ const MiniForm: React.FC<MiniFormProps> = ({onClick,value,handleChangeText, plac
             required
             placeholder={placeholder}
             value={value}
-            onChange ={handleChangeText}
+            onChange={handleChangeText}
             className="p-3 border border-gray-300 bg-gray-50 rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none"
           />
-         {showDescription && (
+          {showDescription && (
             <input
               type="text"
               required
@@ -48,7 +56,7 @@ const MiniForm: React.FC<MiniFormProps> = ({onClick,value,handleChangeText, plac
           <button
             type="submit"
             className="w-full p-3 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition duration-300"
-            onClick={onClick}
+            onClick={onSubmit}
           >
             Submit
           </button>
