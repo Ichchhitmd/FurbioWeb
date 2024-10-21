@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BackButton } from "../common/button";
 import "react-quill/dist/quill.snow.css";
 import dynamic from "next/dynamic";
+import { AuthorTypesResponse } from "@/app/types/blogs/blogsTypes";
+import blogsServices from "@/app/config/services/blogs/blogsServices";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
@@ -10,6 +12,28 @@ interface BlogFormProps {
 }
 const BlogForm: React.FC<BlogFormProps> = ({ handlePress }) => {
   const [content, setContent] = useState("");
+  const [authors, setAuthor] = useState<AuthorTypesResponse[]>([]);
+  const [selectedAuthor, setSelectedAuthor] = useState<number | null>(null);
+
+  const fetchAuthors = async () => {
+    try {
+      const response = await blogsServices.getAllAuthors();
+      if (response) {
+        setAuthor(response);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(()=> {
+    fetchAuthors()
+  },[])
+
+  const handleAuthorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedId = parseInt(e.target.value);
+    setSelectedAuthor(selectedId);
+  };
 
   const handleChange = (value: string) => {
     setContent(value);
@@ -52,11 +76,18 @@ const BlogForm: React.FC<BlogFormProps> = ({ handlePress }) => {
             </select>
           </div>
                   <select
+                  id="author-select"
+                  value={selectedAuthor || ""}
+                  onChange={handleAuthorChange}
                     required
                     className="p-3 border border-gray-300 bg-gray-50 rounded-lg w-1/3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                   >
-                    <option value="">Select Author</option>
-                    <option value="Rabbit">Rabbit</option>
+                    <option value="" disabled>Select Author</option>
+                    {authors.map((author) => (
+                      <option key={author.author_id} value={author.author_id}>
+                        {author.name}
+                      </option>
+                    ))}
                   </select>
 
           <div>
